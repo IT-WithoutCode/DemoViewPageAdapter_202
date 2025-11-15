@@ -1,44 +1,42 @@
 package com.example.viewpagerdemo202;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
-public class ViewPagerAdapter_202 extends PagerAdapter {
+public class ViewPagerAdapter_202 extends FragmentPagerAdapter {
 
-    private Context context_202;
-    private int[] layouts_202;
+    private String[] tabTitles_202 = {"Sức khỏe", "Học tập", "Thành công"};
 
-    public ViewPagerAdapter_202(Context context_202, int[] layouts_202) {
-        this.context_202 = context_202;
-        this.layouts_202 = layouts_202;
-    }
-
-    @Override
-    public int getCount() {
-        return layouts_202.length;
-    }
-
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
+    public ViewPagerAdapter_202(@NonNull FragmentManager fm) {
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        LayoutInflater inflater_202 = LayoutInflater.from(context_202);
-        View view_202 = inflater_202.inflate(layouts_202[position], container, false);
-        container.addView(view_202);
-        return view_202;
+    public Fragment getItem(int position) {
+        switch (position) {
+            case 0:
+                return new HealthFragment_202();
+            case 1:
+                return new LearningFragment_202();
+            case 2:
+                return new SuccessFragment_202();
+            default:
+                return new HealthFragment_202();
+        }
     }
 
     @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        View view_202 = (View) object;
-        container.removeView(view_202);
+    public int getCount() {
+        return tabTitles_202.length;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles_202[position];
     }
 }
